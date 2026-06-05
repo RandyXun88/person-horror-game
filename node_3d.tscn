@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://bl1eae52ioiak"]
+
+[ext_resource type="Texture2D" uid="uid://du37hds3oqrre" path="res://icon.svg" id="1_a202f"]
+[ext_resource type="PackedScene" uid="uid://ux853r0hidh1" path="res://player/player.tscn" id="2_noarx"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_a0tk4"]
+sky_material = SubResource("ProceduralSkyMaterial_noarx")
+
+[sub_resource type="Environment" id="Environment_r3fl7"]
+background_mode = 2
+sky = SubResource("Sky_a0tk4")
+tonemap_mode = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4xowi"]
+size = Vector3(15, 1, 15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noarx"]
+albedo_texture = ExtResource("1_a202f")
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a202f"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r3fl7")
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_4xowi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_noarx")
+mesh = SubResource("BoxMesh_a202f")
+
+[node name="Player" parent="." instance=ExtResource("2_noarx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4359009, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.6929364, -3.1515857e-08, 0.72099876, -0.72099876, -3.028921e-08, 0.6929364, -3.495826e-15, -1, -4.3711385e-08, 7.900349, 7.495077, 0)
+shadow_enabled = true
